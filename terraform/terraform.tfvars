@@ -1,5 +1,6 @@
-aws_region   = "ap-south-1"
+aws_region    = "ap-south-1"
 instance_type = "t3.micro"
+ami           = "ami-05fbd65e334e88c16"
 
-db_username = "postgres"
-db_password = "MySecurePassword123!"
+db_username = "Divya"
+db_password = "Adithya1325"
