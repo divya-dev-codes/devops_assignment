@@ -1,6 +1,22 @@
-variable "aws_region" {}
-variable "instance_type" {}
-variable "db_username" {}
+variable "aws_region" {
+  description = "AWS Region"
+  type        = string
+  default     = "ap-south-1"
+}
+
+variable "instance_type" {
+  description = "EC2 Instance Type"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "db_username" {
+  description = "Database Username"
+  type        = string
+}
+
 variable "db_password" {
-  sensitive = true
+  description = "Database Password"
+  type        = string
+  sensitive   = true
 }
