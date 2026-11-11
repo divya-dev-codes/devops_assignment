@@ -68,7 +68,7 @@ app.use((req, res, next) => {
 
 // 6. Application home route
 app.get("/", (req, res) => {
-  res.send("DevOps Assignment Success");
+  res.send("👋 Hello, 8Byte! Excited to have you here. Everything is running smoothly! 🚀");
 });
 
 // 7. Health check endpoint for AWS ALB
