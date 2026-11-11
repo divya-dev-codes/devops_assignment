@@ -151,4 +151,6 @@ vite.config.ts.timestamp-*
 # Aws Cli
 awscliv2.zip
 aws/
-*.zip
+*.zip*.tfvars
+.terraform/
+*.tfstate*
