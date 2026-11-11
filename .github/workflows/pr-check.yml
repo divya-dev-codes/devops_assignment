@@ -1,10 +1,8 @@
 name: PR Checks
 
 on:
-  pull_request:
-     branches:
-      - main
-      
+  pull_request:   
+  
 jobs:
   test-and-scan:
     runs-on: ubuntu-latest
