@@ -1,0 +1,24 @@
+name: Slack Notification Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  slack-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Simulate CI failure
+        id: simulated_failure
+        continue-on-error: true
+        run: |
+          echo "Simulating a CI failure for notification testing"
+          exit 1
+
+      - name: Send test failure notification to Slack
+        uses: slackapi/slack-github-action@v4.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "🚨 Test CI failure notification from ${{ github.repository }}. Slack integration is working."
