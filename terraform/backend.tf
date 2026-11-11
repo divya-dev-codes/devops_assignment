@@ -1,10 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "divya-tstate1325"
-    key            = "terraform.tfstate"
-    region         = "ap-south-1"
-    use_lockfile   = "terraform-locks"
-    use_lockfile   = true
-    encrypt        = true
+    bucket       = "divya-tstate1325"
+    key          = "terraform.tfstate"
+    region       = "ap-south-1"
+    use_lockfile = true
+    encrypt      = true
   }
 }
