@@ -25,12 +25,11 @@ resource "aws_security_group" "app_sg" {
 
   # Allow HTTP traffic from the internet-facing ALB
   ingress {
-    description     = "HTTP from ALB"
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.alb_sg.id]
-  }
+  from_port       = 22
+  to_port         = 22
+  protocol        = "tcp"
+  prefix_list_ids = [data.aws_ec2_managed_prefix_list.eic.id]
+}
 
   egress {
     from_port   = 0
@@ -103,3 +102,9 @@ resource "aws_security_group" "rds_sg" {
     Name = "rds-security-group"
   }
 }
+
+data "aws_ec2_managed_prefix_list" "eic" {
+  name = "com.amazonaws.${var.aws_region}.ec2-instance-connect"
+}
+
+
