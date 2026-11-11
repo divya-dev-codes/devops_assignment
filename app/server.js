@@ -1,9 +1,8 @@
-
 const express = require("express");
 const client = require("prom-client");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // 1. Create Prometheus registry
 const register = new client.Registry();
@@ -68,7 +67,9 @@ app.use((req, res, next) => {
 
 // 6. Application home route
 app.get("/", (req, res) => {
-  res.send("👋 Hello, 8Byte! Excited to have you here. Everything is running smoothly! 🚀");
+  res.send(
+    "👋 Hello, 8Byte! Excited to have you here. Everything is running smoothly! 🚀"
+  );
 });
 
 // 7. Health check endpoint for AWS ALB

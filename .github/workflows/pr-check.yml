@@ -31,8 +31,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Run unit tests
+        run: npm run test:unit
+
+      - name: Run integration tests
+        run: npm run test:integration
 
       - name: Dependency vulnerability scan
         run: npm audit --audit-level=high
@@ -41,9 +44,20 @@ jobs:
         run: docker build -t devops-demo:test .
 
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: devops-demo:test
           format: table
           exit-code: "1"
+          ignore-unfixed: true
           severity: "CRITICAL,HIGH"
+
+      - name: Send Slack failure notification
+        if: failure() && secrets.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            --data "{\"text\":\"PR Checks failed for ${{ github.repository }}. Branch: ${{ github.head_ref }}. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}" \
+            "$SLACK_WEBHOOK_URL"

@@ -14,7 +14,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY --from=dependencies --chown=node:node /app/node_modules ./node_modules
-COPY --chown=node:node package.json server.js ./
+COPY --chown=node:node package.json app.js server.js ./
 
 # npm, Yarn, and Corepack are unnecessary at runtime.
 RUN rm -rf \
