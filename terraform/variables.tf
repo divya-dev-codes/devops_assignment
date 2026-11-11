@@ -15,12 +15,6 @@ variable "db_username" {
   type        = string
 }
 
-variable "db_password" {
-  description = "Database Password"
-  type        = string
-  sensitive   = true
-}
-
 variable "ami" {
   description = "AMI ID for the application EC2 instance"
   type        = string
