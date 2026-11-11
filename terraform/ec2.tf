@@ -8,7 +8,23 @@ resource "aws_instance" "app" {
     aws_security_group.app_sg.id
   ]
 
-  user_data = file("userdata.sh")
+  iam_instance_profile = aws_iam_instance_profile.app.name
+
+  user_data = templatefile("${path.module}/userdata.sh", {
+    db_secret_arn = aws_db_instance.postgres.master_user_secret[0].secret_arn
+    db_host       = aws_db_instance.postgres.address
+    db_name       = aws_db_instance.postgres.db_name
+    aws_region    = var.aws_region
+  })
+
+  # user_data only runs on first boot, so recreate the instance when it changes
+  user_data_replace_on_change = true
+
+  # Require IMDSv2 (blocks SSRF-style credential theft)
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"
+  }
 
   tags = {
     Name = "devops-app"
