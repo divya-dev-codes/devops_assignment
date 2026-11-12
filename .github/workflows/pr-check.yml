@@ -13,6 +13,9 @@ jobs:
     name: Test and Scan
     runs-on: ubuntu-latest
 
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
     defaults:
       run:
         working-directory: app
@@ -53,9 +56,7 @@ jobs:
           severity: "CRITICAL,HIGH"
 
       - name: Send Slack failure notification
-        if: failure() && secrets.SLACK_WEBHOOK_URL != ''
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: ${{ failure() && env.SLACK_WEBHOOK_URL != '' }}
         run: |
           curl -X POST \
             -H "Content-Type: application/json" \
